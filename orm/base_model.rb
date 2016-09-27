@@ -16,7 +16,7 @@ class GiddyRecord
     @properties ||= {}
     @properties[column_name] = column_attributes
   end
-  
+
   def self.create_table
     attr_accessor :id, :created_at
     query = "CREATE TABLE IF NOT EXISTS #{table_name} (#{table_properties})"
@@ -27,7 +27,7 @@ class GiddyRecord
 
   def save
     @created_at = Time.now.to_s
-    query = "INSERT INTO #{table_name} (#{columns.join(", ")}) VALUES (#{new_record_placeholders})"
+    query = "INSERT INTO #{table_name} (#{columns.join(', ')}) VALUES (#{new_record_placeholders})"
     execute(query, new_record_values)
     set_id
     self
@@ -37,13 +37,13 @@ class GiddyRecord
     update_placeholders = []
     values = []
 
-    options.each do |column_name, value| 
+    options.each do |column_name, value|
       send("#{column_name}=", value)
       update_placeholders << "#{column_name}= ?"
       values << value
     end
 
-    query = "UPDATE #{table_name} SET #{update_placeholders.join(", ")} WHERE id=#{id}"
+    query = "UPDATE #{table_name} SET #{update_placeholders.join(', ')} WHERE id=#{id}"
     execute(query, values.join(", "))
   end
 
@@ -70,7 +70,7 @@ class GiddyRecord
   def self.all
     query = "SELECT * FROM #{table_name}"
     rows = execute(query)
-    rows.map{ |result| map_row_to_object(result) }
+    rows.map { |result| map_row_to_object(result) }
   end
 
   def self.find(id)

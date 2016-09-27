@@ -4,7 +4,7 @@ module QueryHelpers
   end
 
   def new_record_placeholders
-    (['?'] * properties.size).join(", ")
+    (["?"] * properties.size).join(", ")
   end
 
   def new_record_values
@@ -24,7 +24,7 @@ module QueryHelpers
 
   module ClassMethods
     def database
-      @@db ||= SQLite3::Database.new("app.db");
+      @@db ||= SQLite3::Database.new("app.db")
     end
 
     def table_name
@@ -42,7 +42,7 @@ module QueryHelpers
       increment = "PRIMARY KEY AUTOINCREMENT"
       properties[:type] = properties[:type].to_s
       properties[:nullable] = properties[:nullable] ? "NULL" : "NOT NULL"
-      properties[:primary_key] = properties[:primary_key] ? "#{increment}" : ""
+      properties[:primary_key] = properties[:primary_key] ? increment.to_s : ""
       query_builder << column_name.to_s + " " + properties.values.join(" ")
     end
 
