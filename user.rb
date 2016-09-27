@@ -7,13 +7,16 @@ class User < GiddyRecord
   create_table
 end
 # User.destroy_all
-user = User.create(name: "temi", email: "temi@yahoo.com")
-# puts user
-puts user.name
+user = User.new(name: "temi", email: "temi@yahoo.com")
+user.save
+# user = User.find(87)
+puts user.destroy
+
+# puts user.name
 # puts user.destroy
 # puts User.destroy(73)
 # User.destroy(65)
 # user.update(name: "themmy")
-puts user.id
+# puts user.id
 # puts user.email
 # puts user.name

@@ -20,15 +20,15 @@ class GiddyRecord
   def self.create_table
     attr_accessor :id, :created_at
     query = "CREATE TABLE IF NOT EXISTS #{table_name} (#{table_properties})"
-    database.execute query
+    execute query
 
-    columns.each { |col| attr_accessor col }
+    columns.each { |column| attr_accessor column }
   end
 
   def save
     @created_at = Time.now.to_s
     query = "INSERT INTO #{table_name} (#{columns.join(", ")}) VALUES (#{new_record_placeholders})"
-    database.execute(query, new_record_values)
+    execute(query, new_record_values)
     set_id
     self
   end
@@ -44,7 +44,7 @@ class GiddyRecord
     end
 
     query = "UPDATE #{table_name} SET #{update_placeholders.join(", ")} WHERE id=#{id}"
-    database.execute(query, values.join(", "))
+    execute(query, values.join(", "))
   end
 
   def destroy
@@ -57,24 +57,37 @@ class GiddyRecord
 
   def self.destroy(id)
     query = "DELETE FROM #{table_name} WHERE id=#{id}"
-    database.execute query
+    execute query
     true
   end
 
   def self.destroy_all
     query = "DELETE FROM #{table_name}"
-    database.execute query
+    execute(query)
     true
   end
 
   def self.all
-    rows = database.execute "SELECT * FROM #{table_name}"
+    query = "SELECT * FROM #{table_name}"
+    rows = execute(query)
     rows.map{ |result| map_row_to_object(result) }
   end
 
   def self.find(id)
     query = "SELECT * FROM #{table_name} WHERE id=#{id} LIMIT 1"
-    row = database.execute query
+    row = execute(query)
+    map_row_to_object(row[0])
+  end
+
+  def self.first
+    query = "SELECT * FROM #{table_name} ORDER BY id LIMIT 1"
+    row = execute(query)
+    map_row_to_object(row[0])
+  end
+
+  def self.last
+    query = "SELECT * FROM #{table_name} ORDER BY id DESC LIMIT 1"
+    row = execute(query)
     map_row_to_object(row[0])
   end
 end

@@ -69,5 +69,9 @@ module QueryHelpers
 
       model
     end
+
+    def execute(*query)
+      database.execute(*query)
+    end
   end
 end
