@@ -6,11 +6,14 @@ class User < GiddyRecord
   property :email, type: :text
   create_table
 end
-
-user = User.new(name: "temi", email: "temi@yahoo.com")
-user.save
-user.update(name: "themmy")
-puts user.id
-puts user.email
+# User.destroy_all
+user = User.create(name: "temi", email: "temi@yahoo.com")
+# puts user
 puts user.name
+# puts user.destroy
+# puts User.destroy(73)
+# User.destroy(65)
+# user.update(name: "themmy")
+puts user.id
+# puts user.email
 # puts user.name
