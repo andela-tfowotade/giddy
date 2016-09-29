@@ -18,7 +18,6 @@ class GiddyRecord
   end
 
   def self.create_table
-    attr_accessor :id, :created_at
     query = "CREATE TABLE IF NOT EXISTS #{table_name} (#{table_properties})"
     execute query
 
@@ -32,6 +31,8 @@ class GiddyRecord
     set_id
     self
   end
+
+  alias save! save
 
   def update(options = {})
     update_placeholders = []

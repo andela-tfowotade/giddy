@@ -9,8 +9,9 @@ end
 # User.destroy_all
 user = User.new(name: "temi", email: "temi@yahoo.com")
 user.save
+# puts user.name
 # user = User.find(87)
-puts user.destroy
+# puts user.destroy
 
 # puts user.name
 # puts user.destroy

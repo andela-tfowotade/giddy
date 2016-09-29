@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe QueryHelpers do
+describe "QueryHelpers" do
   # let(:db) { Database.new }
 
   # describe ".connect" do
