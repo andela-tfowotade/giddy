@@ -1,7 +1,7 @@
 require "simplecov"
 SimpleCov.start
-# require 'coveralls'
-# Coveralls.wear!
+require 'coveralls'
+Coveralls.wear!
 require "factory_girl"
 
 $LOAD_PATH.unshift File.expand_path("../../orm", __FILE__)
