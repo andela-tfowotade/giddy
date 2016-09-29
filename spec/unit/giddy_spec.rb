@@ -1,13 +1,41 @@
 require "spec_helper"
-require 'pry'
+require "pry"
 
-RSpec.describe "GiddyRecord" do
+RSpec.describe "Giddy" do
+  let(:giddy) { GiddyRecord }
+
+  describe ".to_table" do
+    it "assigns a table name to an instance variable" do
+      giddy.to_table :todos
+      table_name = giddy.instance_variable_get(:@table_name)
+
+      expect(table_name).to eq(:todos)
+    end
+  end
+
+  describe ".property" do
+    before { giddy.property :title, type: :integer }
+
+    it "populates the properties instance variable" do
+      property = giddy.instance_variable_get(:@properties)
+
+      expect(property.keys).to include(:title)
+    end
+  end
+
+  describe ".create_table" do
+    it "executes sql query to create database table" do
+      expect(giddy).to receive(:execute)
+      giddy.create_table
+    end
+  end
+
   describe "#save" do
     after(:all) do
       Todo.destroy_all
     end
 
-    context "when creating todo" do
+    context "when saving todo" do
       it "returns newly created todo" do
         todo = Todo.new attributes_for(:todo)
         todo.save
@@ -143,6 +171,12 @@ RSpec.describe "GiddyRecord" do
         Todo.create(attributes_for(:todo))
       end.to change { Todo.all.count }.by 1
       Todo.destroy_all
+    end
+  end
+
+  describe ".find" do
+    it "returns the model matching the specified id" do
+      expect(Todo.find(1)).to eql Todo.first
     end
   end
 end
