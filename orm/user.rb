@@ -10,8 +10,10 @@ end
 user = User.new(name: "temi", email: "temi@yahoo.com")
 user.save
 # puts user.name
-# user = User.find(87)
-# puts user.destroy
+# puts user.id
+# tee = User.find(user.id)
+# puts tee.name
+puts user.destroy
 
 # puts user.name
 # puts user.destroy
